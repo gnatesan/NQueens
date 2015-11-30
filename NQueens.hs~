@@ -56,13 +56,13 @@ print the corresponding alignment as a board.
 --}
 
 
-{--
-generateSoln :: [Int] -> [[Char]]
-generateSoln (x:xs)  
+
+--generateSoln :: [Int] -> [[Char]]
+generateSoln a = 
 	let board = take (length a) $ repeat $ take (length a) (repeat 'X')
 	    queens = zip a [1..]
-	in queens 
---}	    
+	in queens
+	    
 
 
 	
