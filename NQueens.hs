@@ -77,7 +77,9 @@ printAllSolns n = map (generateBoard [1..n])
 nQueensText :: Int -> [[Char]] 
 nQueensText n = printAllSolns n (nQueensSolutions n)
 
-nQueens n = mapM_ putStrLn (nQueensText n)
+nQueens n 
+	| (nQueensNumSoln n) > 0 = mapM_ putStrLn (nQueensText n)
+	| otherwise = putStrLn "There is No Solution"
     
 
 
