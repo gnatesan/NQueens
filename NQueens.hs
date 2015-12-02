@@ -39,30 +39,50 @@ allSolns a = filter testPermutation a
 --This function takes in a size parameter and returns how many different possible solutions there are.
 nQueensNumSoln :: Int -> Int
 nQueensNumSoln n = 
-	let allLists = solnPermutations n
-	in length $ allSolns allLists  
+    let allLists = solnPermutations n
+    in length $ allSolns allLists  
 
 --This function takes in a size parameter and will print out all valid board configurations.
-
---nQueens :: Int -> IO ()
-nQueens n =
-	let allLists = solnPermutations n
-	in allSolns allLists
-
-
+nQueensSolutions :: Int -> [[Int]]
+nQueensSolutions n =
+    let allLists = solnPermutations n
+    in allSolns allLists
 {--
 This function takes in a list of integers representing a valid positioning of queens and will
 print the corresponding alignment as a board.
 --}
 
-
-{--
-generateSoln :: [Int] -> [[Char]]
-generateSoln (x:xs)  
-	let board = take (length a) $ repeat $ take (length a) (repeat 'X')
-	    queens = zip a [1..]
-	in queens 
---}	    
+-- list from 1 to number of queens -> solution -> character printout
+generateBoard :: [Int] -> [Int] -> String
+generateBoard [] _ = ""
+generateBoard (x:xs) (y) = generateLine x y ++ "\n" ++ generateBoard xs y
 
 
-	
+-- row -> solution -> line printout
+generateLine :: Int -> [Int] -> String
+generateLine a b =
+    case elemIndex a b of
+      Just val -> test (val - 1) "X" ++ test 0 "Q"  ++ test (length b - val - 2) "X"
+      Nothing -> "invalid"
+    --let val = elemIndex a b --val contains the column where 'Q' should be printed in the specified row
+    --in test (val-1) "x"
+    
+-- takes in an int and string and repeats the string that many times
+test :: Int -> String -> String
+test k s = concat [s | r <- [0..k]]
+
+printAllSolns :: Int -> [[Int]] -> [[Char]]
+printAllSolns n = map (generateBoard [1..n])
+
+nQueensText :: Int -> [[Char]] 
+nQueensText n = printAllSolns n (nQueensSolutions n)
+
+nQueens n = mapM_ putStrLn (nQueensText n)
+    
+
+
+
+
+
+
+    
